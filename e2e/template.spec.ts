@@ -2,7 +2,7 @@ import { describe, test, expect } from 'vitest';
 import { render } from '../src';
 
 describe('template', () => {
-  test('should handle template without interpolation', () => {
+  test('should render template without interpolation', () => {
     expect(render('foo bar')).string('foo bar');
   });
 

@@ -3,7 +3,7 @@ import { Vars } from '../vars.ts';
 
 export function includePipe(current: string, pipe: string, vars: Vars): undefined | string {
   // eslint-disable-next-line sonarjs/slow-regex
-  const res = pipe.match(/^includes ['"](?<match>.+)['"]\s*\?\s*(?<trueBranch>.+)\s*:\s*(?<falseBranch>.+)/);
+  const res = pipe.match(/^includes (?<quote>['"])(?<match>[^'"]+)\k<quote>\s*\?\s*(?<trueBranch>[^:\s][^:]*)\s*:\s*(?<falseBranch>.+)/);
   if (!res?.groups) {
     throw new Error('Invalid include pipe: ' + pipe);
   }
