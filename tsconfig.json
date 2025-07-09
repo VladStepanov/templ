@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "lib": [
+      "dom",
+      "es5",
+      "scripthost",
+      "es2015",
+      "es2015.collection",
+      "es2018",
+    ],
+    "target": "ES2019"
+  }
+}
