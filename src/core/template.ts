@@ -6,8 +6,7 @@ interface Options {
 }
 
 export function render(template: string, vars?: Vars) {
-  // eslint-disable-next-line sonarjs/slow-regex
-  return template.replace(/\{\{\s*(.+?)\s*}}/gi, (...args) => {
+  return template.replace(/\{\{([a-zA-Z0-9_.|\s?:"']+)}}/g, (...args) => {
     return parsePipes(args[1], vars);
   });
 }
