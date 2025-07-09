@@ -5,7 +5,7 @@ A minimal and fast JavaScript template engine with pipe-style modifiers.
 ---
 
 ## 📝 Todo
-- [ ] Compiler
+- [ ] Compiler via DFA(Deterministic finite automaton)
 - [ ] Cache intermediate results between pipes
 
 ## ✨ Features
