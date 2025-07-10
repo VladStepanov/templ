@@ -7,7 +7,7 @@ export function includePipe(current: string, pipe: string, vars: Vars): undefine
   if (!res?.groups) {
     throw new Error('Invalid include pipe: ' + pipe);
   }
-  const trueBranch = res.groups.match === current;
+  const trueBranch = current.includes(res.groups.match);
   if (trueBranch) {
     return parsePipe(current, res.groups.trueBranch, vars);
   } else {

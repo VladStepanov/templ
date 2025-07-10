@@ -25,7 +25,7 @@ describe('template', () => {
 
   test('should render template with includes pipe', () => {
     expect(
-      render('foo {{ var.name | includes "bar" ? "1" : "2" }}', { name: 'bar' }),
+      render('foo {{ var.name | includes "bar" ? "1" : "2" }}', { name: 'bar 123' }),
     ).toEqual('foo 1');
   });
 

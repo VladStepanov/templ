@@ -5,6 +5,7 @@ import { Vars } from './vars.ts';
 import { parseFallback } from './parseFallback.ts';
 
 export function parsePipe(current: string, pipe: string, vars: Vars): undefined | string {
+  pipe = pipe.trim();
   if (pipe.includes('??')) {
     return parseFallback(pipe, vars) ?? '';
   }
