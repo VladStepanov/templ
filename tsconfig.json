@@ -10,6 +10,7 @@
       "es2015.collection",
       "es2018",
     ],
-    "target": "ES2019"
+    "target": "ES2019",
+    "types": ["vitest/globals"]
   }
 }

@@ -8,7 +8,7 @@ export function parsePipes(pipes: string, _vars?: Vars) {
   for (const pipe of safeSplitPipes(pipes)) {
     vars['$cur'] = current;
     const res = parsePipe(current, pipe.trim(), vars);
-    if (!res) {
+    if (res === undefined || res === null) {
       throw new Error('undefined received from pipe: ' + pipe);
     }
     current = res;

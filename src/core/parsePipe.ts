@@ -2,8 +2,12 @@ import { includePipe, lowerPipe, upperPipe } from './modifiers';
 import { parseVar } from './parseVar.ts';
 import { parseLiteral } from './parseLiteral.ts';
 import { Vars } from './vars.ts';
+import { parseFallback } from './parseFallback.ts';
 
 export function parsePipe(current: string, pipe: string, vars: Vars): undefined | string {
+  if (pipe.includes('??')) {
+    return parseFallback(pipe, vars) ?? '';
+  }
   if (pipe.startsWith('var.') || pipe.startsWith('$')) {
     return parseVar(pipe, vars);
   }
@@ -20,5 +24,5 @@ export function parsePipe(current: string, pipe: string, vars: Vars): undefined 
     return parseLiteral(pipe);
   }
 
-  throw new Error('Invalid pipe ' + pipe);
+  throw new Error('Invalid pipe: ' + pipe);
 }
