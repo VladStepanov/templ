@@ -27,5 +27,5 @@ render(template, { foo: 'world' })
 ## 🔧 Installation
 
 ```bash
-npm install slotify
+npm install slottify
 ```
