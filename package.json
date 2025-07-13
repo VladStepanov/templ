@@ -1,7 +1,7 @@
 {
   "name": "slottify",
   "type": "module",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "packageManager": "npm@10.9.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
