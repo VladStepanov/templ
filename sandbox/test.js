@@ -1,6 +1,8 @@
-import { render } from '../dist/index.js';
+import { TemplateEngine } from '../dist/index.js';
 
-const template = 'foo {{ "| test" | upper }}';
+const engine = new TemplateEngine();
 
-const res = render(template);
+const template = 'foo {{ role | includes "admin" }}';
+
+const res = engine.render(template);
 console.log(res);
