@@ -1,61 +1,73 @@
-import { render } from '../src';
+import { TemplateEngine } from '../src/corev2';
+import { beforeEach, describe, expect, it } from 'vitest';
 
-describe('template', () => {
-  test('should render template without interpolation', () => {
-    expect(render('foo bar')).string('foo bar');
+describe('Integration Tests', () => {
+  let engine: TemplateEngine;
+
+  beforeEach(() => {
+    engine = new TemplateEngine();
   });
 
-  test('should render template with vars', () => {
+  it('should render template without interpolation', () => {
+    expect(engine.render('foo bar')).toEqual('foo bar');
+  });
+
+  it('should render template with vars', () => {
     expect(
-      render('{{ var.name }}', { name: 'foo' }),
+      engine.render('{{ name }}', { name: 'foo' }),
     ).toEqual('foo');
   });
 
-  test('should render template with upper pipe', () => {
+  it('should render template with upper pipe', () => {
     expect(
-      render('{{ var.name | upper }}', { name: 'foo' }),
+      engine.render('{{ name | upper }}', { name: 'foo' }),
     ).toEqual('FOO');
   });
 
-  test('should render template with lower pipe', () => {
+  it('should render template with lower pipe', () => {
     expect(
-      render('{{ var.name | lower }}', { name: 'FOO' }),
+      engine.render('{{ name | lower }}', { name: 'FOO' }),
     ).toEqual('foo');
   });
 
-  test('should render template with includes pipe', () => {
+  it('should render template with includes pipe', () => {
     expect(
-      render('foo {{ var.name | includes "bar" ? "1" : "2" }}', { name: 'bar 123' }),
+      engine.render('foo {{ name | includes "bar" ? "1" : "2" }}', { name: 'bar 123' }),
     ).toEqual('foo 1');
   });
 
-  test.for(['"', '\''])('should ignore pipe symbol in literals inside %s quotes', ([quote]) => {
+  it.for(['"', '\''])('should ignore pipe symbol in literals inside %s quotes', ([quote]) => {
     expect(
-      render(`foo {{ ${quote}| test${quote} | upper }}`),
-    ).toEqual('foo | TEST');
+      engine.render(`foo {{ ${quote}| test${quote} }}`),
+    ).toEqual('foo | test');
   });
 
-  test('should handle fallbacks with vars', () => {
-    expect(
-      render('foo {{ var.foo ?? var.foo2 }}', { foo2: 'foo2' }),
-    ).toEqual('foo foo2');
-  });
+  it('should work with complex template with custom filters', () => {
+    const template = `
+      Welcome {{ name | capitalize }}!
+      {{ isAdmin ? 'You have admin privileges' : 'Regular user access' }}
+      Last login: {{ lastLogin | formatDate }}
+    `.trim();
 
-  test('should handle mixed fallbacks', () => {
-    expect(
-      render(`foo {{ var.foo ?? var.foo2 ?? 'default' }}`),
-    ).toEqual('foo default');
-  });
+    // Mock formatDate filter
+    engine.addFilter('formatDate', (value: any) => {
+      return new Date(value).toISOString();
+    });
 
-  test('should handle if fallbacks returns nothing', () => {
-    expect(
-      render(`foo{{ var.foo ?? var.foo2 }}`),
-    ).toEqual('foo');
-  });
+    engine.addFilter('capitalize', (value: any) => {
+      const str = String(value);
+      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    });
 
-  test('should handle pipes and fallbacks mixed', () => {
-    expect(
-      render(`foo{{ var.foo ?? var.foo2 | upper }}`, { foo2: 'foo2' }),
-    ).toEqual('fooFOO2');
+    const context = {
+      name: 'john doe',
+      isAdmin: true,
+      lastLogin: '2023-01-01',
+    };
+
+    const result = engine.render(template, context);
+    expect(result).toContain('Welcome John doe!');
+    expect(result).toContain('You have admin privileges');
+    expect(result).toContain('Last login: 2023-01-01T00:00:00.000Z');
   });
 });

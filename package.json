@@ -13,6 +13,7 @@
     "lint:fix": "eslint --fix",
     "prepare": "husky",
     "test": "vitest",
+    "test:debug": "vitest --inspect-brk --no-file-parallelism",
     "coverage": "vitest --coverage"
   },
   "keywords": [],
