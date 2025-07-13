@@ -1,4 +1,4 @@
-import { TemplateEngine } from '../src/corev2';
+import { TemplateEngine } from '../src';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('Integration Tests', () => {

@@ -1,1 +1,2 @@
-export * from './template';
+export * from './template-engine';
+export * from './template-parser';

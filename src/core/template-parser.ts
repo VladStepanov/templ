@@ -144,7 +144,6 @@ class TemplateParser {
     return token;
   }
 
-  // Main parsing method
   parse(): ASTNode[] {
     const nodes: ASTNode[] = [];
 
@@ -266,6 +265,4 @@ class TemplateParser {
   }
 }
 
-// Export for testing
 export { TemplateParser };
-export type { TemplateContext, FilterFunction };
