@@ -18,6 +18,12 @@ describe('Integration Tests', () => {
     ).toEqual('foo');
   });
 
+  it('should render template without spaces', () => {
+    expect(
+      engine.render('{{name}}', { name: 'foo' }),
+    ).toEqual('foo');
+  });
+
   it('should render template with upper pipe', () => {
     expect(
       engine.render('{{ name | upper }}', { name: 'foo' }),
