@@ -121,19 +121,9 @@ engine.addFilter('reverse', (value) => {
 engine.render('{{ text | reverse }}', { text: 'hello' });
 // Output: olleh
 
-// Filter with multiple arguments
-engine.addFilter('replace', (value, search, replace) => {
-  return String(value).replace(String(search), String(replace));
-});
-
-engine.render('{{ text | replace "world" "universe" }}', { 
-  text: 'hello world' 
-});
-// Output: hello universe
-
 // List available filters
 console.log(engine.getFilters());
-// Output: ['lower', 'upper', 'capitalize', 'includes', 'reverse', 'replace']
+// Output: ['lower', 'upper', 'capitalize', 'includes', 'reverse']
 ```
 
 ### Complex Templates
