@@ -23,14 +23,14 @@ class TemplateParser {
     let insideTemplate = false;
 
     while (i < this.input.length) {
-      if (this.input.substr(i, 2) === '{{') {
+      if (this.input.slice(i, i + 2) === '{{') {
         tokens.push({ type: 'OPEN_TEMPLATE', value: '{{' });
         insideTemplate = true;
         i += 2;
         continue;
       }
 
-      if (this.input.substr(i, 2) === '}}') {
+      if (this.input.slice(i, i + 2) === '}}') {
         tokens.push({ type: 'CLOSE_TEMPLATE', value: '}}' });
         insideTemplate = false;
         i += 2;

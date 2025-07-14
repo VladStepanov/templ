@@ -5,28 +5,31 @@ import type {
   FilterNode,
 } from './types/ast-types.ts';
 
-type FilterFunction = (value: any, ...args: any[]) => any;
+type FilterFunction = (value: unknown, ...args: unknown[]) => unknown;
 
-type TemplateContext = Record<string, any>;
+type TemplateContext = Record<string, unknown>;
 
 class TemplateEngine {
-  private filters: Record<string, FilterFunction>;
+  private filters: Record<string, FilterFunction> = {
+    lower: (value: unknown): string => String(value).toLowerCase(),
+    upper: (value: unknown): string => String(value).toUpperCase(),
+    capitalize: (value: unknown) => {
+      const r = String(value);
+      return r.charAt(0).toUpperCase() + r.slice(1).toLowerCase();
+    },
+    includes: (value: unknown, search: unknown): boolean => String(value).includes(String(search)),
+  };
 
-  constructor() {
-    this.filters = {
-      lower: (value: any): string => String(value).toLowerCase(),
-      upper: (value: any): string => String(value).toUpperCase(),
-      capitalize: (value: any) => {
-        const r = String(value);
-        return r.charAt(0).toUpperCase() + r.slice(1).toLowerCase();
-      },
-      includes: (value: any, search: any): boolean => String(value).includes(String(search)),
-    };
-  }
+  private astCache = new Map();
 
   compile(template: string): ASTNode[] {
+    if (this.astCache.has(template)) {
+      const ast = this.astCache.get(template);
+      return ast;
+    }
     const parser = new TemplateParser(template);
     const ast = parser.parse();
+    this.astCache.set(template, ast);
     return ast;
   }
 
